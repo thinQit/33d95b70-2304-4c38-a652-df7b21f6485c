@@ -1,2 +1,14 @@
-# 33d95b70-2304-4c38-a652-df7b21f6485c
-Generated project: codex
+# DHL Same Hour Delivery
+
+Responsive Next.js 14 marketing website for DHL Same Hour Delivery.
+
+## Tech Stack
+
+- Next.js 14 (App Router)
+- TypeScript
+- Tailwind CSS
+- shadcn/ui foundations
+- Framer Motion
+
+## Getting Started
+
