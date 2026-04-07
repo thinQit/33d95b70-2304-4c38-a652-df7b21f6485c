@@ -1,97 +1,101 @@
-'use client'
+'use client';
 
-import { useState } from 'react'
-import Link from 'next/link'
-import { Menu, X, ChevronRight } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import { cn } from '@/lib/utils'
+import { useState } from 'react';
+import Link from 'next/link';
+import { Menu, X, ArrowRight } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 
-interface NavLink {
-  label: string
-  href: string
+interface NavItem {
+  label: string;
+  href: string;
 }
 
 interface NavbarProps {
-  logo?: string
-  navItems?: NavLink[]
-  ctaLabel?: string
-  ctaHref?: string
+  logoText: string;
+  items: NavItem[];
+  ctaLabel: string;
+  ctaHref: string;
 }
 
 export default function Navbar({
-  logo = 'DHL Same Hour',
-  navItems = [
-    { label: 'Landing', href: '/' },
-    { label: 'Same Hour Delivery', href: '/same-hour-delivery' },
+  logoText = 'DHL SAME-DAY',
+  items = [
+    { label: 'Home', href: '/' },
+    { label: 'Same-Day Delivery', href: '/same-day-delivery' },
     { label: 'About Us', href: '/about' },
-    { label: 'Business Cases', href: '/proven-business-cases' },
+    { label: 'Business Cases', href: '/business-cases' },
     { label: 'Contact', href: '/contact' },
   ],
   ctaLabel = 'Request a Quote',
   ctaHref = '/contact',
 }: Partial<NavbarProps>) {
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-black/10 bg-white/95 backdrop-blur">
-      <nav className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 md:px-6">
-        <Link href="/" className="font-serif text-lg tracking-[0.2em] text-black">
-          {logo}
+    <header className="sticky top-0 z-50 w-full border-b border-black/10 bg-white/95 backdrop-blur">
+      <div className="h-1 w-full bg-[#C1121F]" />
+      <div className="h-1 w-full bg-[#FFD200]" />
+      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 md:px-6">
+        <Link href="/" className="font-serif text-lg tracking-[0.18em] text-black md:text-xl">
+          {logoText}
         </Link>
 
-        <div className="hidden items-center gap-8 md:flex">
-          {navItems.map((link) => (
+        <nav className="hidden items-center gap-8 md:flex">
+          {items.map((item) => (
             <Link
-              key={link.href}
-              href={link.href}
-              className="text-xs tracking-[0.2em] text-black/80 transition-colors hover:text-[#C1121F]"
+              key={item.href}
+              href={item.href}
+              className="text-sm uppercase tracking-[0.14em] text-black/80 transition hover:text-[#C1121F]"
             >
-              {link.label}
+              {item.label}
             </Link>
           ))}
-        </div>
+        </nav>
 
         <div className="hidden md:block">
-          <Button
-            asChild
-            className="rounded-lg bg-[#C1121F] px-6 py-2 text-xs tracking-[0.16em] text-white hover:bg-[#a00f19]"
-          >
-            <Link href={ctaHref}>{ctaLabel}</Link>
+          <Button asChild className="rounded-lg bg-[#C1121F] text-white hover:bg-[#a50f1a]">
+            <Link href={ctaHref}>
+              {ctaLabel}
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </Link>
           </Button>
         </div>
 
         <button
+          type="button"
           onClick={() => setOpen((v) => !v)}
-          className="inline-flex items-center justify-center md:hidden"
+          className="inline-flex items-center justify-center rounded-md p-2 text-black md:hidden"
           aria-label="Toggle menu"
         >
-          {open ? <X className="h-5 w-5 text-black" /> : <Menu className="h-5 w-5 text-black" />}
+          {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
         </button>
-      </nav>
+      </div>
 
       <div
         className={cn(
-          'overflow-hidden border-t border-black/10 bg-white transition-all duration-300 md:hidden',
-          open ? 'max-h-96' : 'max-h-0'
+          'border-t border-black/10 bg-white md:hidden',
+          open ? 'block' : 'hidden'
         )}
       >
-        <div className="space-y-1 px-4 py-4">
-          {navItems.map((link) => (
+        <nav className="mx-auto flex max-w-7xl flex-col gap-2 px-4 py-4">
+          {items.map((item) => (
             <Link
-              key={link.href}
-              href={link.href}
+              key={'mobile-' + item.href}
+              href={item.href}
               onClick={() => setOpen(false)}
-              className="flex items-center justify-between border-b border-black/5 py-3 text-xs tracking-[0.2em] text-black"
+              className="rounded-md px-2 py-2 text-sm uppercase tracking-[0.12em] text-black/80 hover:bg-black/5"
             >
-              {link.label}
-              <ChevronRight className="h-4 w-4 text-[#C1121F]" />
+              {item.label}
             </Link>
           ))}
-          <Button asChild className="mt-3 w-full rounded-lg bg-[#C1121F] text-xs tracking-[0.16em] text-white">
-            <Link href={ctaHref}>{ctaLabel}</Link>
+          <Button asChild className="mt-2 w-full rounded-lg bg-[#C1121F] text-white hover:bg-[#a50f1a]">
+            <Link href={ctaHref} onClick={() => setOpen(false)}>
+              {ctaLabel}
+            </Link>
           </Button>
-        </div>
+        </nav>
       </div>
     </header>
-  )
+  );
 }

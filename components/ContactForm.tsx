@@ -1,98 +1,52 @@
-"use client";
+'use client';
 
-import React from "react";
-import { Mail, Phone, MapPin, Sparkles, LucideIcon } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
-import { Card, CardContent } from "@/components/ui/card";
-
-interface ContactInfo {
-  icon: string;
-  label: string;
-  value: string;
-}
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 
 interface ContactFormProps {
-  headline: string;
-  subheadline?: string;
-  contactInfo?: ContactInfo[];
+  heading: string;
+  description: string;
 }
 
-const iconMap: Record<string, LucideIcon> = {
-  Mail,
-  Phone,
-  MapPin,
-};
-
 export default function ContactForm({
-  headline = "CONNECT WITH OUR ATELIER",
-  subheadline = "For styling appointments, wholesale inquiries, or editorial collaborations, send us a message.",
-  contactInfo = [],
+  heading = 'Start Your Same-Day Delivery Plan',
+  description = 'Tell us about your volume, routes, and SLA requirements. Our team will respond promptly.',
 }: Partial<ContactFormProps>) {
-  const infoItems =
-    contactInfo.length > 0
-      ? contactInfo
-      : [
-          { icon: "Mail", label: "Email", value: "studio@veloura-house.com" },
-          { icon: "Phone", label: "Phone", value: "+1 (212) 555-0198" },
-          { icon: "MapPin", label: "Showroom", value: "SoHo, New York, NY" },
-        ];
+  const [status, setStatus] = useState('');
 
   return (
-    <section className="py-24 md:py-32 bg-muted/50">
-      <div className="container mx-auto max-w-7xl px-4 animate-fade-in-up">
-        <div className="mx-auto max-w-2xl text-center">
-          <h2 className="text-3xl font-semibold tracking-[0.08em] uppercase text-foreground md:text-4xl">{headline}</h2>
-          {subheadline && <p className="mt-4 text-lg text-muted-foreground">{subheadline}</p>}
-        </div>
-        <div className="mt-12 grid gap-8 md:grid-cols-2">
-          <Card className="border border-border bg-card card-hover">
-            <CardContent className="p-6">
-              <form className="space-y-6">
-                <div className="grid gap-4 sm:grid-cols-2">
-                  <div className="space-y-2">
-                    <Label htmlFor="name">Name</Label>
-                    <Input id="name" placeholder="Your name" />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="email">Email</Label>
-                    <Input id="email" type="email" placeholder="you@example.com" />
-                  </div>
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="subject">Subject</Label>
-                  <Input id="subject" placeholder="Inquiry topic" />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="message">Message</Label>
-                  <Textarea id="message" placeholder="Tell us more..." rows={5} />
-                </div>
-                <Button type="submit" className="w-full rounded-lg px-6 py-3 font-medium tracking-wide uppercase transition-all duration-200 hover:scale-105">
-                  Send Message
-                </Button>
-              </form>
-            </CardContent>
-          </Card>
-          <div className="flex flex-col justify-center space-y-8">
-            {infoItems.map(function (info, i) {
-              const Icon = iconMap[info.icon] || Sparkles;
-              return (
-                <div key={i} className="flex items-start gap-4">
-                  <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 text-primary">
-                    <Icon className="h-5 w-5" />
-                  </span>
-                  <div>
-                    <p className="font-semibold uppercase tracking-wide text-foreground">{info.label}</p>
-                    <p className="text-muted-foreground">{info.value}</p>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        setStatus('Thank you. Your inquiry has been captured for follow-up.');
+      }}
+      className="space-y-5 rounded-xl border border-black/10 bg-white p-6 shadow-sm md:p-8"
+    >
+      <div>
+        <h3 className="font-serif text-2xl uppercase tracking-[0.08em]">{heading}</h3>
+        <p className="mt-2 text-sm text-black/70">{description}</p>
       </div>
-    </section>
+
+      <div className="grid gap-4 md:grid-cols-2">
+        <Input name="name" placeholder="Full Name" required />
+        <Input name="company" placeholder="Company" required />
+        <Input name="email" type="email" placeholder="Business Email" required />
+        <Input name="phone" type="tel" placeholder="Phone Number" required />
+      </div>
+
+      <textarea
+        name="message"
+        placeholder="Tell us about your same-day delivery needs"
+        required
+        className="min-h-[140px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm outline-none focus-visible:ring-2 focus-visible:ring-[#FFD200]"
+      />
+
+      <Button type="submit" className="w-full rounded-lg bg-[#C1121F] text-white hover:bg-[#a50f1a] md:w-auto">
+        Submit Business Inquiry
+      </Button>
+
+      {status ? <p className="text-sm text-green-700">{status}</p> : null}
+    </form>
   );
 }

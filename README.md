@@ -1,14 +1,13 @@
-# DHL Same Hour Delivery
+# DHL Same-Day Delivery
 
-Responsive Next.js 14 marketing website for DHL Same Hour Delivery.
+Conversion-focused, responsive Next.js website for DHL Same-Day Delivery services.
 
-## Tech Stack
+## Stack
 
 - Next.js 14 (App Router)
 - TypeScript
 - Tailwind CSS
-- shadcn/ui foundations
-- Framer Motion
+- shadcn/ui foundation
 
 ## Getting Started
 

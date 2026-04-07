@@ -1,7 +1,5 @@
 "use client";
 
-import React from "react";
-
 interface Stat {
   value: string;
   label: string;
@@ -12,29 +10,16 @@ interface StatsCounterProps {
   bgColor?: string;
 }
 
-export default function StatsCounter({
-  stats = [],
-  bgColor = "bg-primary text-primary-foreground",
-}: Partial<StatsCounterProps>) {
-  const items =
-    stats.length > 0
-      ? stats
-      : [
-          { value: "12+", label: "Years in Fashion" },
-          { value: "48", label: "Seasonal Drops" },
-          { value: "96%", label: "Client Satisfaction" },
-          { value: "30K", label: "Global Community" },
-        ];
-
+export default function StatsCounter({ stats = [], bgColor }: Partial<StatsCounterProps>) {
   return (
-    <section className={`py-24 md:py-32 ${bgColor}`}>
+    <section className={'py-24 md:py-32 ' + (bgColor || 'bg-primary text-primary-foreground')}>
       <div className="container mx-auto max-w-7xl px-4 animate-fade-in-up">
-        <div className={`grid gap-8 text-center grid-cols-2 md:grid-cols-${Math.min(items.length, 4)}`}>
-          {items.map(function (stat, i) {
+        <div className={'grid gap-8 text-center ' + ('grid-cols-2 md:grid-cols-' + Math.min(stats.length || 2, 4))}>
+          {stats.map(function (stat, i) {
             return (
-              <div key={i}>
-                <p className="text-4xl font-semibold md:text-5xl">{stat.value}</p>
-                <p className="mt-2 text-sm uppercase tracking-[0.2em] text-primary-foreground/80">{stat.label}</p>
+              <div key={i} className="card-hover rounded-xl p-4">
+                <p className="text-4xl font-bold md:text-5xl">{stat.value}</p>
+                <p className="mt-2 text-sm uppercase tracking-wider opacity-80">{stat.label}</p>
               </div>
             );
           })}

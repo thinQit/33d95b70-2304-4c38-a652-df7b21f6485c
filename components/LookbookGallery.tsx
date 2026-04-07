@@ -1,56 +1,49 @@
-'use client'
+'use client';
 
-import Image from 'next/image'
-import { motion } from 'framer-motion'
-import { cn } from '@/lib/utils'
+import Image from 'next/image';
+import { motion } from 'framer-motion';
 
-interface LookbookItem {
-  imageSrc: string
-  caption: string
+interface GalleryItem {
+  imageSrc: string;
+  caption: string;
 }
 
 interface LookbookGalleryProps {
-  images?: LookbookItem[]
+  images: GalleryItem[];
 }
 
 export default function LookbookGallery({
   images = [
-    { imageSrc: 'https://res.cloudinary.com/dwc294mzm/image/upload/c_fill,w_1200,h_800,g_auto/v1771577623/site-images/retail/13077721.jpg', caption: 'Peak-hour dispatch desk' },
-    { imageSrc: 'https://res.cloudinary.com/dwc294mzm/image/upload/c_fill,w_1200,h_800,g_auto/v1771577588/site-images/retail/12791209.jpg', caption: 'Store-to-door same hour lane' },
-    { imageSrc: 'https://res.cloudinary.com/dwc294mzm/image/upload/c_fill,w_1200,h_800,g_auto/v1771577599/site-images/retail/11297769.jpg', caption: 'Operational handoff precision' },
-    { imageSrc: 'https://res.cloudinary.com/dwc294mzm/image/upload/c_fill,w_1200,h_800,g_auto/v1771577607/site-images/retail/13068378.jpg', caption: 'Courier readiness at scale' },
+    { imageSrc: 'https://res.cloudinary.com/dwc294mzm/image/upload/c_fill,w_1200,h_800,g_auto/v1771577593/site-images/retail/10360425.jpg', caption: 'Priority retail handoff in downtown district' },
+    { imageSrc: 'https://res.cloudinary.com/dwc294mzm/image/upload/c_fill,w_1200,h_800,g_auto/v1771577602/site-images/retail/11498771.jpg', caption: 'Store-to-door premium same-day experience' },
+    { imageSrc: 'https://res.cloudinary.com/dwc294mzm/image/upload/c_fill,w_1200,h_800,g_auto/v1771577617/site-images/retail/13068367.jpg', caption: 'Peak-hour dispatch from fulfillment point' },
+    { imageSrc: 'https://res.cloudinary.com/dwc294mzm/image/upload/c_fill,w_1200,h_800,g_auto/v1771577588/site-images/retail/11440423.jpg', caption: 'Branded delivery touchpoint for luxury orders' },
   ],
 }: Partial<LookbookGalleryProps>) {
   return (
-    <section className="mx-auto grid max-w-7xl gap-4 px-4 md:grid-cols-12 md:px-6">
-      {images.map((item, idx) => (
+    <div className="grid gap-4 md:grid-cols-12">
+      {images.map((item, index) => (
         <motion.figure
-          key={item.caption + idx}
+          key={item.imageSrc + index}
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.45, delay: idx * 0.08 }}
-          className={cn(
-            'group overflow-hidden rounded-xl',
-            idx === 0 ? 'md:col-span-7 md:row-span-2' : '',
-            idx === 1 ? 'md:col-span-5' : '',
-            idx === 2 ? 'md:col-span-5' : '',
-            idx === 3 ? 'md:col-span-7' : ''
-          )}
+          viewport={{ once: true, margin: '-80px' }}
+          transition={{ duration: 0.5, delay: index * 0.08 }}
+          className={index % 3 === 0 ? 'md:col-span-7' : 'md:col-span-5'}
         >
-          <Image
-            src={item.imageSrc}
-            alt={item.caption}
-            width={1200}
-            height={800}
-            unoptimized
-            className="h-[260px] w-full object-cover transition-transform duration-500 group-hover:scale-105 md:h-full"
-          />
-          <figcaption className="border border-t-0 border-black/10 bg-white px-4 py-3 text-xs tracking-[0.14em] text-black/70">
-            {item.caption.toUpperCase()}
-          </figcaption>
+          <div className="overflow-hidden rounded-xl">
+            <Image
+              src={item.imageSrc}
+              alt={item.caption}
+              width={1200}
+              height={800}
+              unoptimized
+              className="h-[320px] w-full object-cover md:h-[420px]"
+            />
+          </div>
+          <figcaption className="mt-2 text-sm uppercase tracking-[0.08em] text-black/70">{item.caption}</figcaption>
         </motion.figure>
       ))}
-    </section>
-  )
+    </div>
+  );
 }

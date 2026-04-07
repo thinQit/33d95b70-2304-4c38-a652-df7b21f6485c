@@ -3,39 +3,32 @@ export interface NavItem {
   href: string;
 }
 
-export interface CtaLink {
+export interface CTA {
   label: string;
   href: string;
 }
 
-export interface BaseSection {
+export interface SectionBase {
   id: string;
   type: string;
   headline: string;
   subheadline?: string;
-  primaryCta?: CtaLink;
-  secondaryCta?: CtaLink;
-  content?: Record<string, unknown>;
+  primaryCta?: CTA;
+  secondaryCta?: CTA;
 }
 
-export interface SitePage {
+export interface PageConfig {
   path: string;
   name: string;
-  sections: BaseSection[];
-}
-
-export interface SeoMeta {
-  title: string;
-  description: string;
+  sections: SectionBase[];
 }
 
 export interface SiteConfig {
   projectName: string;
   displayName: string;
   tagline: string;
-  pages: SitePage[];
   navigation: {
     items: NavItem[];
   };
-  seoMeta: SeoMeta;
+  pages: PageConfig[];
 }

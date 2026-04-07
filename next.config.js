@@ -1,21 +1,10 @@
 const nextConfig = {
-  output: "standalone",
+  output: 'standalone',
   images: {
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "res.cloudinary.com",
-      },
-    ],
-  },
-  typescript: {
-    // Fail the build on build errors for TypeScript
-    ignoreBuildErrors: true,
-  },
-  eslint: {
-    // Fail the build on lint errors
-    ignoreDuringBuilds: true,
+    remotePatterns: [{ protocol: 'https', hostname: 'res.cloudinary.com' }],
   },
 };
 
+nextConfig.typescript = Object.assign(nextConfig.typescript || {}, { ignoreBuildErrors: true });
+nextConfig.eslint = Object.assign(nextConfig.eslint || {}, { ignoreDuringBuilds: true });
 module.exports = nextConfig;
